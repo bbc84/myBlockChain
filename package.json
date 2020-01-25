@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "crypto": "^1.0.1",
     "express": "*",
     "timestamp": "0.0.1",
     "timestamp-nano": "^1.0.0"

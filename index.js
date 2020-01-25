@@ -1,8 +1,10 @@
 
-var Timestamp = require("timestamp-nano");
+const Timestamp = require("timestamp-nano");
+const Crypto = require('crypto')
 
-const getHash = (data) => { 
-    return (data = data + '#');
+const getHash = ({data}) => { 
+    //return (data = data + '#');
+    return Crypto.createHash('sha1').update(data).digest('hex'); 
 } 
 
 class Block {
@@ -17,15 +19,18 @@ class Block {
 class Blockchain {
     constructor (){
         
-        const genesis = new Block('gen-data', 'gen-hash','gen-lasthash', 'gen-timestamp');
-        this.chain = [genesis];
+        const genTimestamp = "2020-01-01T00:00:00.000Z";
+        const genLastHash = 'ffffffffffffffffffffffffffffffffffffffff'
+        const genHash = getHash({data:'gen-data' , timestamp: genTimestamp, lastHash:genLastHash});
+        const genBlock = new Block('gen-data', genHash,genLastHash, genTimestamp);
+        this.chain = [genBlock];
      };
 
 
     addBlock(data) {
         const timestamp = Timestamp.fromDate(new Date()).toJSON();
         const lastHash = this.chain[this.chain.length-1].hash;
-        const hash = getHash(data +'*'+timestamp+'*'+ lastHash);
+        const hash = getHash({data:data , timestamp: timestamp, lastHash:lastHash});
         const customBlock = new Block(data, hash, lastHash, timestamp);
 
         this.chain.push(customBlock);
@@ -34,6 +39,6 @@ class Blockchain {
 
 console.log ("-- Starting the App --");
 const myBlockChain = new Blockchain();
-myBlockChain.addBlock('One');
-myBlockChain.addBlock('Two');
+myBlockChain.addBlock('trans-1');
+myBlockChain.addBlock('trans-2');
 console.log("printing --" + JSON.stringify(myBlockChain));
