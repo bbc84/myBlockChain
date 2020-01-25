@@ -1,6 +1,8 @@
 {
   "dependencies": {
-    "express": "*"
+    "express": "*",
+    "timestamp": "0.0.1",
+    "timestamp-nano": "^1.0.0"
   },
   "scripts": {
     "start": "node index.js"

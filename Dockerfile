@@ -1,7 +1,7 @@
 #Build the dependencies
 FROM node:alpine
 #Setup the working directory for container
-WORK DIR /usr/app
+WORKDIR /usr/app
 #Install dependencies
 COPY ./package.json ./
 RUN npm Install
